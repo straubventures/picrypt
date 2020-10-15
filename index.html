@@ -7,9 +7,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel='stylesheet' type='text/css' href='/style/style.css'>
     <title>Document</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#form').on('submit', function () {
+                var file_data = $('#link').prop('files')[0];
+                var form_data = new FormData();
+                form_data.append('file', file_data);
+                $.ajax({
+                    url: 'http://127.0.0.1:5500/', // point to server-side controller method
+                    dataType: 'text', // what to expect back from the server
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'post',
+                    success: function (response) {
+                        $('#msg').html(response); // display success response from the server
+                    },
+                    error: function (response) {
+                        $('#msg').html(response); // display error response from the server
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
+    <p id="msg"></p>
+    <span id='header'></span>
+    <form id='form'>
+        <input type='text' name='name' value='name' id="name">
+        <input type='text' name='link' value='link' id="link">
+        <input type='text' name='text' value='text' id="text">
+        <input type='submit' id='submit'>
+    </form>
     <script src="index.js"></script>
 </body>
 
