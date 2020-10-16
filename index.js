@@ -7,9 +7,10 @@ function Image(name, link, originalText, file) {
 }
 
 
-function uploadPic(link) {
+function uploadPic(link, text) {
     var img = document.createElement("img");
     img.src = link.value;
+    img.alt = text.value;
     var src = document.getElementById("header");
     src.appendChild(img);
 }
@@ -27,7 +28,7 @@ document.getElementById("form").addEventListener("submit", function (e) {
     let name = document.getElementById("name")
     let link = document.getElementById("link")
     let text = document.getElementById("text")
-    uploadPic(link)
+    uploadPic(link, text)
     e.preventDefault()
     picrypt(name.value, link.value, text.value, file.value)
 });
