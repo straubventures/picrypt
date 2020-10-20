@@ -6,13 +6,17 @@ function Image(name, link, originalText, file) {
         this.link = link
 }
 
-
-function uploadPic(link, text) {
+function uploadPic(e, link, text, time) {
     var img = document.createElement("img");
     img.src = link.value;
     img.alt = text.value;
     var src = document.getElementById("header");
     src.appendChild(img);
+    setTimeout(function () {
+        img.remove();
+    }, time * 1000)
+    e.reset();
+
 }
 function picrypt(userName, userText, userPicLink, file) {
     let newObj = new Image(
@@ -22,14 +26,23 @@ function picrypt(userName, userText, userPicLink, file) {
         this.file = file)
     console.log(newObj)
 }
+function resetForm() {
+    document.getElementById('form').reset()
+}
 
 document.getElementById("form").addEventListener("submit", function (e) {
-
+    e.preventDefault();
     let name = document.getElementById("name")
     let link = document.getElementById("link")
     let text = document.getElementById("text")
-    uploadPic(link, text)
-    e.preventDefault()
+    let time = document.getElementById('time')
+    uploadPic(e, link, text, time.value)
     picrypt(name.value, link.value, text.value, file.value)
+    e.preventDefault();
+    e.srcElement.reset();
+
+
+
+
 });
 
